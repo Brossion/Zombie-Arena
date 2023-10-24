@@ -1,0 +1,35 @@
+﻿  Pickup.cpp
+C:\VS Projects\Zombie Arena\Pickup.cpp(26,20): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+C:\VS Projects\Zombie Arena\Pickup.cpp(27,20): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+C:\VS Projects\Zombie Arena\Pickup.cpp(51,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Zombie Arena\Pickup.cpp(51,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\VS Projects\Zombie Arena\Pickup.cpp(107,34): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\VS Projects\Zombie Arena\Pickup.cpp(111,32): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+  Zombie Arena.cpp
+C:\VS Projects\Zombie Arena\Zombie Arena.cpp(23,44): warning C4244: '=': conversion from 'unsigned int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\VS Projects\Zombie Arena\Zombie Arena.cpp(24,44): warning C4244: '=': conversion from 'unsigned int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\VS Projects\Zombie Arena\Zombie Arena.cpp(26,56): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\VS Projects\Zombie Arena\Zombie Arena.cpp(26,42): warning C4244: 'argument': conversion from 'T' to 'unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\VS Projects\Zombie Arena\Zombie Arena.cpp(605,50): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Generating Code...
+  Zombie Arena.vcxproj -> C:\VS Projects\Zombie Arena\Debug\Zombie Arena.exe
