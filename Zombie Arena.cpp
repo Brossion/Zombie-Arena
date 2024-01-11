@@ -1,12 +1,14 @@
-#include <fstream>
 #include <sstream>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "Player.h"
 #include "ZombieArena.h"
+#include "Player.h"
 #include "TextureHolder.h"
 #include "Bullet.h"
 #include "Pickup.h"
+
+using namespace sf;
 
 int main()
 {
@@ -23,7 +25,8 @@ int main()
 	resolution.x = VideoMode::getDesktopMode().width;
 	resolution.y = VideoMode::getDesktopMode().height;
 
-	RenderWindow window(VideoMode(resolution.x, resolution.y), "Zombie Arena", Style::Fullscreen);
+	RenderWindow window(VideoMode(resolution.x, resolution.y),
+		"Zombie Arena", Style::Fullscreen);
 	
 	// Create a SFML View for the main action
 	View mainView(FloatRect(0, 0, resolution.x, resolution.y));
@@ -49,7 +52,8 @@ int main()
 	// Create the background
 	VertexArray background;
 	// Load the texture for our background vertex array
-	Texture textureBackground = TextureHolder::GetTexture("graphics/background_sheet.png");
+	Texture textureBackground = TextureHolder::GetTexture(
+		"graphics/background_sheet.png");
 
 	// Prepare for ahorde of zombies
 	int numZombies;
@@ -70,7 +74,6 @@ int main()
 	window.setMouseCursorVisible(false);
 	Sprite spriteCrosshair;
 	Texture textureCrosshair = TextureHolder::GetTexture("graphics/crosshair.png");
-
 	spriteCrosshair.setTexture(textureCrosshair);
 	spriteCrosshair.setOrigin(25, 25);
 
@@ -197,7 +200,8 @@ int main()
 
 	// When did we last update the HUD?
 	int frameSinceLastHUDUpdate = 0;
-
+	// What time was the last update
+	Time timeSinceLastUpdate;
 	// How often (in frames) should we update the HUD
 	int fpsMeasurementFrameInterval = 1000;
 
@@ -259,17 +263,20 @@ int main()
 			if (event.type == Event::KeyPressed) 
 			{
 				// Pause and resume a game while playing
-				if (event.key.code == Keyboard::Return && state == State::PLAYING)
+				if (event.key.code == Keyboard::Return && 
+					state == State::PLAYING)
 				{
 					state = State::PAUSED;
 				}
-				else if (event.key.code == Keyboard::Return && state == State::PAUSED)
+				else if (event.key.code == Keyboard::Return && 
+					state == State::PAUSED)
 				{
 					state = State::PLAYING;
 					// Reset the clock so there isn't a frame jump
 					clock.restart();
 				}
-				else if (event.key.code == Keyboard::Return && state == State::GAME_OVER)
+				else if (event.key.code == Keyboard::Return && 
+state == State::GAME_OVER)
 				{
 					state = State::LEVELING_UP;
 					wave = 0;
@@ -449,7 +456,7 @@ int main()
 				int tileSize = createBackground(background, arena);
 
 				// Spawn the player in the middle of the arena
-				player.Spawn(arena, resolution, tileSize);
+				player.spawn(arena, resolution, tileSize);
 
 				// Configure the pickups
 				healthPickup.setArena(arena);
@@ -491,7 +498,8 @@ int main()
 			mouseScreenPosition = Mouse::getPosition();
 
 			// Convert mouse position to world coordinates of mainView
-			mouseWorldPosition = window.mapPixelToCoords(Mouse::getPosition(), mainView);
+			mouseWorldPosition = window.mapPixelToCoords(
+				Mouse::getPosition(), mainView);
 
 			// Set the crosshair to the mouse world location
 			spriteCrosshair.setPosition(mouseWorldPosition);
@@ -508,7 +516,10 @@ int main()
 			// Loop through each zombie and update them
 			for (int i = 0; i < numZombies; i++)
 			{
-				zombies[i].update(dt.asSeconds(), playerPosition);
+				if (zombies[i].isAlive())
+				{
+					zombies[i].update(dt.asSeconds(), playerPosition);
+				}
 			}
 
 			// Update any bullets that are in-flight
@@ -604,6 +615,8 @@ int main()
 			// Size up the health bar
 			healthBar.setSize(Vector2f(player.getHealth() * 3, 50));
 
+			// Increment the amount of time since the last HUD update
+			timeSinceLastUpdate += dt;
 			// Increment the number of frames since the previous update
 			frameSinceLastHUDUpdate++;
 
@@ -638,7 +651,7 @@ int main()
 				zombiesRemainingText.setString(ssZombiesAlive.str());
 
 				frameSinceLastHUDUpdate = 0;
-
+				timeSinceLastUpdate = Time::Zero;
 			}// End HUD update
 
 		}// End of updating the screen

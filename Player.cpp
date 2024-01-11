@@ -15,7 +15,7 @@ Player::Player()
 	m_Sprite.setOrigin(25, 25);
 }
 
-void Player::Spawn(IntRect arena, Vector2f resolution, int tileSize) 
+void Player::spawn(IntRect arena, Vector2f resolution, int tileSize) 
 {
 	// Place the player in the middle of the arena
 	m_Position.x = arena.width / 2;
